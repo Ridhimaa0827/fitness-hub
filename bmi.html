@@ -1,0 +1,310 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CALCULATOR</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    body {
+      background-image: url('bmi.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      animation: fadeInBody 1s ease;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .cont {
+      background-color: rgba(17, 17, 17, 0.85);
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+      width: 400px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: fadeInCont 1.2s ease;
+    }
+
+    @keyframes fadeInCont {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cont:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+    }
+
+    .cont h1 {
+      color: gold;
+      font-size: 34px;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.5);
+    }
+
+    .form label {
+      margin-top: 18px;
+      font-weight: 600;
+      font-size: 16px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background-color: #222;
+      color: #fff;
+      font-size: 16px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background-color: #333;
+      box-shadow: 0 0 5px 2px rgba(255, 215, 0, 0.6);
+    }
+
+    .form button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 25px;
+      background-color: gold;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .form button:hover {
+      background-color: #ffd700;
+      transform: translateY(-2px);
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      background-color: rgba(34, 34, 34, 0.9);
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    .result h2 {
+      color: gold;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .measurements p {
+      font-size: 15px;
+      margin: 6px 0;
+    }
+
+    .result button {
+      padding: 12px;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .result button:hover {
+      background-color: #f5f5f5;
+    }
+
+    #weightinputpound,
+    #heightinputcm,
+    #heightinputin,
+    #heightinputft {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cont">
+    <h1>BMI CALCULATOR</h1>
+
+    <div class="form">
+      <label>WEIGHT</label>
+      <div class="contin">
+        <input type="number" id="weightinputkg" placeholder="Enter your weight in kg" />
+        <input type="number" id="weightinputpound" placeholder="Enter your weight in pounds" />
+        <select name="weight" id="weightSelect">
+          <option value="kg">kg</option>
+          <option value="pound">pound</option>
+        </select>
+      </div>
+
+      <label>HEIGHT</label>
+      <div class="contin">
+        <input type="number" id="heightinputmt" placeholder="Enter your height in meters" />
+        <input type="number" id="heightinputcm" placeholder="Enter your height in centimeters" />
+        <input type="number" id="heightinputft" placeholder="Feet" />
+        <input type="number" id="heightinputin" placeholder="Inches" />
+        <select name="height" id="heightSelect">
+          <option value="meter">meter</option>
+          <option value="centimeter">centimeter</option>
+          <option value="feet">feet</option>
+        </select>
+      </div>
+
+      <button onclick="Calculate()">Calculate</button>
+    </div>
+
+    <div class="result">
+      <h2>Your BMI is:</h2>
+      <p class="status"></p>
+      <div class="measurements">
+        <p>Underweight: &lt; 18.5</p>
+        <p>Normal Weight: 18.5 - 24.9</p>
+        <p>Overweight: 25 - 29.9</p>
+        <p>Obesity: BMI of 30 or greater</p>
+      </div>
+
+      <button onclick="window.location.reload()">Try Again</button>
+      <br><br>
+      <button><a href="aboutus.php" style="color:black; text-decoration:none;">BACK</a></button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let weightSelect = document.getElementById('weightSelect');
+      let heightSelect = document.getElementById('heightSelect');
+
+      weightSelect.addEventListener('change', () => {
+        document.getElementById('weightinputkg').style.display = weightSelect.value === 'kg' ? 'block' : 'none';
+        document.getElementById('weightinputpound').style.display = weightSelect.value === 'pound' ? 'block' : 'none';
+      });
+
+      heightSelect.addEventListener('change', () => {
+        document.getElementById('heightinputmt').style.display = 'none';
+        document.getElementById('heightinputcm').style.display = 'none';
+        document.getElementById('heightinputft').style.display = 'none';
+        document.getElementById('heightinputin').style.display = 'none';
+
+        if (heightSelect.value === 'meter') {
+          document.getElementById('heightinputmt').style.display = 'block';
+        } else if (heightSelect.value === 'centimeter') {
+          document.getElementById('heightinputcm').style.display = 'block';
+        } else if (heightSelect.value === 'feet') {
+          document.getElementById('heightinputft').style.display = 'block';
+          document.getElementById('heightinputin').style.display = 'block';
+        }
+      });
+    });
+
+    function Calculate() {
+      let weightinkg = (document.getElementById('weightSelect').value === 'kg')
+        ? parseFloat(document.getElementById('weightinputkg').value)
+        : parseFloat(document.getElementById('weightinputpound').value) * 0.453592;
+
+      let heightinmt = 0;
+      let heightOption = document.getElementById('heightSelect').value;
+
+      if (heightOption === 'meter') {
+        heightinmt = parseFloat(document.getElementById('heightinputmt').value);
+      } else if (heightOption === 'centimeter') {
+        heightinmt = parseFloat(document.getElementById('heightinputcm').value) * 0.01;
+      } else if (heightOption === 'feet') {
+        heightinmt = parseFloat(document.getElementById('heightinputft').value) * 0.3048 + parseFloat(document.getElementById('heightinputin').value) * 0.0254;
+      }
+
+      if (weightinkg > 0 && heightinmt > 0) {
+        let bmi = weightinkg / (heightinmt * heightinmt);
+        let status = "";
+        let dietPlan = "";
+        let workoutPlan = "";
+
+        if (bmi < 18.5) {
+          status = "Underweight";
+          dietPlan = "Eat calorie-dense foods like nuts, dairy, rice, and protein shakes.";
+          workoutPlan = "Do light weight training and yoga to build lean muscle.";
+        } else if (bmi < 24.9) {
+          status = "Normal weight";
+          dietPlan = "Maintain a balanced diet with lean protein, whole grains, and veggies.";
+          workoutPlan = "Continue with moderate cardio and full-body strength training.";
+        } else if (bmi < 29.9) {
+          status = "Overweight";
+          dietPlan = "Focus on a calorie-deficit diet with high protein and low carbs.";
+          workoutPlan = "Do HIIT, cardio, and resistance training 4–5 times a week.";
+        } else {
+          status = "Obesity";
+          dietPlan = "Strict low-calorie, portion-controlled diet with more fiber and protein.";
+          workoutPlan = "Start with low-impact cardio like walking or swimming, then slowly increase intensity.";
+        }
+
+        document.querySelector('.result h2').innerText = `Your BMI is: ${bmi.toFixed(2)}`;
+        document.querySelector('.status').innerText = `Status: ${status}`;
+
+        document.querySelector('.form').style.display = "none";
+        const resultBox = document.querySelector('.result');
+        resultBox.style.display = "block";
+
+        // Clear old recommendations if exist
+        resultBox.querySelectorAll('p.extra').forEach(el => el.remove());
+
+        const dietElement = document.createElement('p');
+        dietElement.className = 'extra';
+        dietElement.innerHTML = `<strong>Recommended Diet:</strong> ${dietPlan}`;
+        dietElement.style.marginTop = "10px";
+
+        const workoutElement = document.createElement('p');
+        workoutElement.className = 'extra';
+        workoutElement.innerHTML = `<strong>Recommended Workout:</strong> ${workoutPlan}`;
+        workoutElement.style.marginTop = "5px";
+
+        resultBox.appendChild(dietElement);
+        resultBox.appendChild(workoutElement);
+
+        const waitMsg = document.createElement('p');
+        waitMsg.className = 'extra';
+        waitMsg.innerText = "Please wait 5 seconds to go to the home page...";
+        waitMsg.style.marginTop = "15px";
+        waitMsg.style.fontWeight = "bold";
+        waitMsg.style.color = "#0D47A1";
+
+        resultBox.appendChild(waitMsg);
+
+        setTimeout(() => { window.location.href = "aboutus.php"; }, 5000);
+      } else {
+        alert("Please enter valid values!");
+      }
+    }
+  </script>
+</body>
+</html>
